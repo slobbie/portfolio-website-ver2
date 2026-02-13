@@ -1,5 +1,7 @@
 # Portfolio Website Ver.2
 
+![Image](https://github.com/user-attachments/assets/7c75e822-1717-42f2-b17e-29e9b368d78d)
+
 [배포 링크](https://slobbie.github.io/portfolio-website-ver2/)
 
 ## 사용 스택
