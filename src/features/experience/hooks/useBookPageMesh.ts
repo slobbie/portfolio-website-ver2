@@ -1,26 +1,24 @@
 import { useMemo } from 'react';
+
 import {
   Bone,
-  MeshStandardMaterial,
+  Material,
+  MeshBasicMaterial,
   Skeleton,
   SkinnedMesh,
   Texture,
 } from 'three';
+
 import {
   PAGE_SEGMENTS,
   SEGMENT_WIDTH,
-  WHITE_COLOR,
-  EMISSIVE_COLOR,
   pageGeometry,
   pageMaterials,
 } from '@/features/experience/constants/bookPageConfig';
 
-interface UseBookPageMeshParams {
+interface IUseBookPageMeshParams {
   picture: Texture;
   picture2: Texture;
-  pictureRoughness?: Texture;
-  number: number;
-  pagesLength: number;
 }
 
 const createPageBones = (): Bone[] => {
@@ -43,29 +41,13 @@ const createPageBones = (): Bone[] => {
 const createPageMaterials = ({
   picture,
   picture2,
-  pictureRoughness,
-  number,
-  pagesLength,
-}: Omit<UseBookPageMeshParams, 'number' | 'pagesLength'> & {
-  number: number;
-  pagesLength: number;
-}): MeshStandardMaterial[] => {
-  const frontMaterial = new MeshStandardMaterial({
-    color: WHITE_COLOR,
+}: Pick<IUseBookPageMeshParams, 'picture' | 'picture2'>): Material[] => {
+  const frontMaterial = new MeshBasicMaterial({
     map: picture,
-    ...(number === 0 ? { roughnessMap: pictureRoughness } : { roughness: 0.6 }),
-    emissive: EMISSIVE_COLOR,
-    emissiveIntensity: 0,
   });
 
-  const backMaterial = new MeshStandardMaterial({
-    color: WHITE_COLOR,
+  const backMaterial = new MeshBasicMaterial({
     map: picture2,
-    ...(number === pagesLength - 1
-      ? { roughnessMap: pictureRoughness }
-      : { roughness: 0.6 }),
-    emissive: EMISSIVE_COLOR,
-    emissiveIntensity: 0,
   });
 
   return [...pageMaterials, frontMaterial, backMaterial];
@@ -74,10 +56,7 @@ const createPageMaterials = ({
 export const useBookPageMesh = ({
   picture,
   picture2,
-  pictureRoughness,
-  number,
-  pagesLength,
-}: UseBookPageMeshParams): SkinnedMesh => {
+}: IUseBookPageMeshParams): SkinnedMesh => {
   const mesh = useMemo(() => {
     const bones = createPageBones();
     const skeleton = new Skeleton(bones);
@@ -85,9 +64,6 @@ export const useBookPageMesh = ({
     const materials = createPageMaterials({
       picture,
       picture2,
-      pictureRoughness,
-      number,
-      pagesLength,
     });
 
     const skinnedMesh = new SkinnedMesh(pageGeometry, materials);
@@ -98,7 +74,7 @@ export const useBookPageMesh = ({
     skinnedMesh.bind(skeleton);
 
     return skinnedMesh;
-  }, [picture, picture2, pictureRoughness, number, pagesLength]);
+  }, [picture, picture2]);
 
   return mesh;
 };

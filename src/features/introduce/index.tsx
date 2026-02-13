@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import {
   motion,
   useScroll,
@@ -8,11 +9,11 @@ import {
   useMotionValueEvent,
   AnimatePresence,
 } from 'framer-motion';
-
 import styled from '@emotion/styled';
+
 import SandText from './components/SandText';
 
-const imgPath = 'url(/images/bg1.jpg)';
+const imgPath = `url(${import.meta.env.BASE_URL}images/bg1.jpg)`;
 
 const commonBackgroundStyle = {
   backgroundImage: imgPath,
@@ -64,13 +65,13 @@ const IntroduceSection = () => {
   const backgroundColorChange = useTransform(
     scrollYProgress,
     [0.15, 0.22],
-    ['transparent', 'rgb(16, 16, 16)']
+    ['transparent', 'rgb(16, 16, 16)'],
   );
 
   const textColorChange = useTransform(
     scrollYProgress,
     [0.15, 0.22],
-    ['#fff', '#fff']
+    ['#fff', '#fff'],
   );
 
   const rawScale = useTransform(scrollYProgress, [0.18, 0.25], [1, 10]);
@@ -91,7 +92,7 @@ const IntroduceSection = () => {
   const rawLine0Y = useTransform(
     scrollYProgress,
     [0.22, 0.26, 0.48, 0.52],
-    [100, -180, -180, 0]
+    [100, -180, -180, 0],
   );
   const line0Y = useSpring(rawLine0Y, { stiffness: 100, damping: 30 });
 
@@ -99,7 +100,7 @@ const IntroduceSection = () => {
   const rawLine0Scale = useTransform(
     scrollYProgress,
     [0.52, 0.535, 0.55, 0.565, 0.58, 0.595],
-    [1, 1.4, 0.9, 1.5, 0.85, 1.6]
+    [1, 1.4, 0.9, 1.5, 0.85, 1.6],
   );
   const line0Scale = useSpring(rawLine0Scale, { stiffness: 400, damping: 12 });
 
@@ -107,7 +108,7 @@ const IntroduceSection = () => {
   const rawLine1Y = useTransform(
     scrollYProgress,
     [0.26, 0.3, 0.45],
-    [100, -130, -130]
+    [100, -130, -130],
   );
   const line1Y = useSpring(rawLine1Y, { stiffness: 100, damping: 30 });
   const line1Opacity = useTransform(scrollYProgress, [0.26, 0.28], [0, 1]);
@@ -116,7 +117,7 @@ const IntroduceSection = () => {
   const rawLine2Y = useTransform(
     scrollYProgress,
     [0.3, 0.34, 0.45],
-    [100, -60, -60]
+    [100, -60, -60],
   );
   const line2Y = useSpring(rawLine2Y, { stiffness: 100, damping: 30 });
   const line2Opacity = useTransform(scrollYProgress, [0.3, 0.32], [0, 1]);
@@ -125,7 +126,7 @@ const IntroduceSection = () => {
   const rawLine3Y = useTransform(
     scrollYProgress,
     [0.34, 0.38, 0.45],
-    [100, -10, -10]
+    [100, -10, -10],
   );
   const line3Y = useSpring(rawLine3Y, { stiffness: 100, damping: 30 });
   const line3Opacity = useTransform(scrollYProgress, [0.34, 0.36], [0, 1]);
@@ -134,7 +135,7 @@ const IntroduceSection = () => {
   const rawLine4Y = useTransform(
     scrollYProgress,
     [0.38, 0.42, 0.45],
-    [100, 40, 40]
+    [100, 40, 40],
   );
   const line4Y = useSpring(rawLine4Y, { stiffness: 100, damping: 30 });
   const line4Opacity = useTransform(scrollYProgress, [0.38, 0.4], [0, 1]);
@@ -148,7 +149,7 @@ const IntroduceSection = () => {
   const textContainerOpacity = useTransform(
     scrollYProgress,
     [0.2, 0.22],
-    [0, 1]
+    [0, 1],
   );
 
   const maskImage = useMotionTemplate`radial-gradient(circle at center, transparent ${width}px, black ${width}px)`;
@@ -159,7 +160,7 @@ const IntroduceSection = () => {
         style={{
           width: '100vw',
           height: '500vh',
-          backgroundImage: 'url(/images/bg.png)',
+          backgroundImage: `url(${import.meta.env.BASE_URL}images/bg.png)`,
         }}
       >
         <motion.div
@@ -301,7 +302,7 @@ const IntroduceSection = () => {
                 textAlign: 'right',
               }}
             >
-              my work.
+              my work
             </motion.span>
           </motion.div>
         </motion.div>
@@ -322,7 +323,7 @@ const IntroduceSection = () => {
               flexDirection: 'column',
               pointerEvents: 'none',
               opacity: textContainerOpacity,
-              backgroundImage: 'url(/images/bg.png)',
+              backgroundImage: `url(${import.meta.env.BASE_URL}images/bg.png)`,
             }}
           >
             {/* 라인 0: I'm Frontend Developer - 부서지지 않고 강조됨 */}

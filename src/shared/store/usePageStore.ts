@@ -1,14 +1,14 @@
 import { create } from 'zustand';
 
-interface Page {
+interface IPage {
   front: string;
   back: string;
 }
 
-interface PageStore {
+interface IPageStore {
   page: number;
   pictures: string[];
-  pages: Page[];
+  pages: IPage[];
   setPage: (page: number) => void;
   initializePages: () => void;
 }
@@ -24,7 +24,7 @@ const pictures = [
   'pokemon-sub',
 ];
 
-export const usePageStore = create<PageStore>((set) => ({
+export const usePageStore = create<IPageStore>((set) => ({
   page: 0,
   pictures,
   pages: [],

@@ -1,9 +1,10 @@
 import { useRef, useEffect, useCallback } from 'react';
+
 import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 
-interface TransitionOverlayProps {
+interface ITransitionOverlayProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
@@ -18,7 +19,7 @@ const TransitionOverlay = ({
   isOpen,
   onClose,
   children,
-}: TransitionOverlayProps) => {
+}: ITransitionOverlayProps) => {
   const pathRef = useRef<SVGPathElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -72,7 +73,7 @@ const TransitionOverlay = ({
     gsap.fromTo(
       contentRef.current,
       { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.4, delay: 0.5, ease: 'power2.out' }
+      { opacity: 1, y: 0, duration: 0.4, delay: 0.5, ease: 'power2.out' },
     );
   }, [isOpen]);
 

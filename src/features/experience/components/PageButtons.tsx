@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
+
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 import { usePageStore } from '@/shared/store/usePageStore';
+
 import { usePages } from '@/features/experience/hooks/usePages';
 
 const PageButtons = () => {
-  const { page } = usePageStore();
-  // const { setPage } = usePageStore();
+  const { page, setPage } = usePageStore();
   const pages = usePages();
   const { scrollYProgress } = useScroll();
 
@@ -16,7 +17,9 @@ const PageButtons = () => {
   const buttonsOpacity = useTransform(scrollYProgress, [0.82, 0.9], [0, 1]);
 
   useEffect(() => {
-    const audio = new Audio('/audios/page-flip-01a.mp3');
+    const audio = new Audio(
+      `${import.meta.env.BASE_URL}audios/page-flip-01a.mp3`,
+    );
     audio.volume = 0.1;
     audio.play();
   }, [page]);
@@ -31,7 +34,7 @@ const PageButtons = () => {
               <PageButton
                 key={index}
                 isActive={index === page}
-                // onClick={() => setPage(index)}
+                onClick={() => setPage(index)}
               >
                 {index === 0 ? 'Cover' : `Page ${index}`}
               </PageButton>

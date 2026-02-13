@@ -1,14 +1,13 @@
-import { Object3D, SkinnedMesh } from 'three';
 import { useRef } from 'react';
 
-// import { useState } from 'react';
-// import { usePageStore } from '@/shared/store/usePageStore';
+import { Object3D, SkinnedMesh } from 'three';
+
 import { useBookPageTextures } from '@/features/experience/hooks/useBookPageTextures';
 import { useBookPageMesh } from '@/features/experience/hooks/useBookPageMesh';
 import { useBookPageAnimation } from '@/features/experience/hooks/useBookPageAnimation';
 import { PAGE_DEPTH } from '@/features/experience/constants/bookPageConfig';
 
-interface BookPageProps {
+interface IBookPageProps {
   number: number;
   front: string;
   back: string;
@@ -27,8 +26,8 @@ const BookPage = ({
   bookClosed,
   pagesLength,
   ...props
-}: BookPageProps) => {
-  const [picture, picture2, pictureRoughness] = useBookPageTextures({
+}: IBookPageProps) => {
+  const [picture, picture2] = useBookPageTextures({
     front,
     back,
     number,
@@ -38,13 +37,8 @@ const BookPage = ({
   const skinnedMesh = useBookPageMesh({
     picture,
     picture2,
-    pictureRoughness,
-    number,
-    pagesLength,
   });
 
-  // const { setPage } = usePageStore();
-  // const [highlighted, setHighlighted] = useState(false);
   const highlighted = false;
 
   const groupRef = useRef<Object3D | null>(null);
@@ -64,23 +58,7 @@ const BookPage = ({
   });
 
   return (
-    <group
-      {...props}
-      ref={groupRef}
-      // onPointerEnter={(e) => {
-      //   e.stopPropagation();
-      //   setHighlighted(true);
-      // }}
-      // onPointerLeave={(e) => {
-      //   e.stopPropagation();
-      //   setHighlighted(false);
-      // }}
-      // onClick={(e) => {
-      //   e.stopPropagation();
-      //   setPage(opened ? number : number + 1);
-      //   setHighlighted(false);
-      // }}
-    >
+    <group {...props} ref={groupRef}>
       <primitive
         object={skinnedMesh}
         ref={skinnedMeshRef}
