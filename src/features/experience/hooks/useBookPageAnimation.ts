@@ -1,8 +1,10 @@
 import type { MutableRefObject } from 'react';
+
 import { MathUtils, MeshStandardMaterial, Object3D, SkinnedMesh } from 'three';
 import { useFrame } from '@react-three/fiber';
 import { easing } from 'maath';
 import { degToRad } from 'three/src/math/MathUtils.js';
+
 import {
   EASING_FACTOR,
   EASING_FACTOR_FOLD,
@@ -11,7 +13,7 @@ import {
   TURNING_CURVE_STRENGTH,
 } from '@/features/experience/constants/bookPageConfig';
 
-interface UseBookPageAnimationParams {
+interface IUseBookPageAnimationParams {
   skinnedMeshRef: MutableRefObject<SkinnedMesh | null>;
   groupRef: MutableRefObject<Object3D | null>;
   turnedAtRef: MutableRefObject<number>;
@@ -29,7 +31,7 @@ const TURN_DURATION_MS = 400;
 
 const updateEmissiveIntensity = (
   mesh: SkinnedMesh,
-  highlighted: boolean
+  highlighted: boolean,
 ): void => {
   const targetIntensity = highlighted ? HIGHLIGHT_INTENSITY : 0;
   const materials = mesh.material as MeshStandardMaterial[];
@@ -38,7 +40,7 @@ const updateEmissiveIntensity = (
     materials[index].emissiveIntensity = MathUtils.lerp(
       materials[index].emissiveIntensity,
       targetIntensity,
-      LERP_FACTOR
+      LERP_FACTOR,
     );
   });
 };
@@ -48,7 +50,7 @@ const calculateTurningTime = (
   opened: boolean,
   lastOpened: boolean,
   turnedAtRef: MutableRefObject<number>,
-  lastOpenedRef: MutableRefObject<boolean>
+  lastOpenedRef: MutableRefObject<boolean>,
 ): number => {
   if (lastOpened !== opened) {
     turnedAtRef.current = Date.now();
@@ -66,7 +68,7 @@ const calculateBoneRotation = (
   bonesLength: number,
   targetRotation: number,
   turningTime: number,
-  bookClosed: boolean
+  bookClosed: boolean,
 ): {
   rotationAngle: number;
   foldRotationAngle: number;
@@ -112,7 +114,7 @@ export const useBookPageAnimation = ({
   opened,
   bookClosed,
   number,
-}: UseBookPageAnimationParams): void => {
+}: IUseBookPageAnimationParams): void => {
   useFrame((_, delta) => {
     const mesh = skinnedMeshRef.current;
     if (!mesh) return;
@@ -126,7 +128,7 @@ export const useBookPageAnimation = ({
       opened,
       lastOpenedRef.current,
       turnedAtRef,
-      lastOpenedRef
+      lastOpenedRef,
     );
 
     // 3. 목표 회전각 계산
@@ -147,7 +149,7 @@ export const useBookPageAnimation = ({
           bones.length,
           targetRotation,
           turningTime,
-          bookClosed
+          bookClosed,
         );
 
       easing.dampAngle(
@@ -155,14 +157,14 @@ export const useBookPageAnimation = ({
         'y',
         rotationAngle,
         EASING_FACTOR,
-        delta
+        delta,
       );
       easing.dampAngle(
         target.rotation,
         'x',
         foldRotationAngle * foldIntensity,
         EASING_FACTOR_FOLD,
-        delta
+        delta,
       );
     });
   });

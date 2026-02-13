@@ -1,33 +1,36 @@
 import { useRef, useMemo } from 'react';
+
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { MotionValue, useMotionValueEvent } from 'framer-motion';
+
 import {
   wavePointsVertexShader,
   wavePointsFragmentShader,
 } from '../shaders/wave';
 
-type SectionType = 'full' | 'left' | 'center' | 'right';
+type TSectionType = 'full' | 'left' | 'center' | 'right';
 
 // 섹션별 설정
-const SECTION_CONFIG: Record<SectionType, { offset: number; width: number }> = {
-  full: { offset: 0, width: 1 },
-  left: { offset: 0, width: 1 / 3 },
-  center: { offset: 1 / 3, width: 1 / 3 },
-  right: { offset: 2 / 3, width: 1 / 3 },
-};
+const SECTION_CONFIG: Record<TSectionType, { offset: number; width: number }> =
+  {
+    full: { offset: 0, width: 1 },
+    left: { offset: 0, width: 1 / 3 },
+    center: { offset: 1 / 3, width: 1 / 3 },
+    right: { offset: 2 / 3, width: 1 / 3 },
+  };
 
 // 웨이브 라인 설정
 const LINE_COUNT = 80; // 라인 개수
 const POINTS_PER_LINE = 200; // 라인당 점 개수
 
-interface WavePointsProps {
+interface IWavePointsProps {
   scrollProgress: MotionValue<number>;
   opacity: MotionValue<number>;
-  section: SectionType;
+  section: TSectionType;
 }
 
-const WavePoints = ({ scrollProgress, opacity, section }: WavePointsProps) => {
+const WavePoints = ({ scrollProgress, opacity, section }: IWavePointsProps) => {
   const pointsRef = useRef<THREE.Points>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { viewport } = useThree();
@@ -75,7 +78,12 @@ const WavePoints = ({ scrollProgress, opacity, section }: WavePointsProps) => {
       uSectionWidth: { value: sectionConfig.width },
       uColor: { value: new THREE.Color(0.9, 0.9, 0.9) }, // 밝은 회색
     }),
-    [viewport.width, viewport.height, sectionConfig.offset, sectionConfig.width]
+    [
+      viewport.width,
+      viewport.height,
+      sectionConfig.offset,
+      sectionConfig.width,
+    ],
   );
 
   // 스크롤 값 업데이트
@@ -120,10 +128,10 @@ const WavePoints = ({ scrollProgress, opacity, section }: WavePointsProps) => {
   );
 };
 
-interface WaveBackgroundProps {
+interface IWaveBackgroundProps {
   scrollProgress: MotionValue<number>;
   opacity: MotionValue<number>;
-  section?: SectionType;
+  section?: TSectionType;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -134,7 +142,7 @@ const WaveBackground = ({
   section = 'full',
   className,
   style,
-}: WaveBackgroundProps) => {
+}: IWaveBackgroundProps) => {
   return (
     <div className={className} style={{ ...style, background: '#101010' }}>
       <Canvas
@@ -153,4 +161,4 @@ const WaveBackground = ({
 };
 
 export default WaveBackground;
-export type { SectionType };
+export type { TSectionType };

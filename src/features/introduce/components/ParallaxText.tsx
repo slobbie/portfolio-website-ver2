@@ -7,7 +7,7 @@ import {
   useTransform,
 } from 'framer-motion';
 
-interface ParallaxProps {
+interface IParallaxProps {
   children: string;
   baseVelocity: number;
 }
@@ -19,7 +19,7 @@ const wrap = (min: number, max: number, v: number) => {
   return result;
 };
 
-const ParallaxText = ({ children, baseVelocity = 5 }: ParallaxProps) => {
+const ParallaxText = ({ children, baseVelocity = 5 }: IParallaxProps) => {
   const { scrollY } = useScroll();
   const lastScrollY = useRef(0);
   const xValue = useRef(0);

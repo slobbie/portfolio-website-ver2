@@ -1,8 +1,9 @@
 import { useRef, useEffect, useMemo, useCallback } from 'react';
+
 import { MotionValue, useMotionValueEvent } from 'framer-motion';
 import gsap from 'gsap';
 
-interface SandTextProps {
+interface ISandTextProps {
   children: string;
   scrollProgress: MotionValue<number>;
   triggerAt: number;
@@ -10,7 +11,7 @@ interface SandTextProps {
   className?: string;
 }
 
-interface CharState {
+interface ICharState {
   el: HTMLSpanElement;
   targetX: number;
   targetY: number;
@@ -24,9 +25,9 @@ const SandText = ({
   triggerAt,
   style,
   className,
-}: SandTextProps) => {
+}: ISandTextProps) => {
   const containerRef = useRef<HTMLSpanElement>(null);
-  const charStatesRef = useRef<CharState[]>([]);
+  const charStatesRef = useRef<ICharState[]>([]);
   const isInitializedRef = useRef(false);
   const hasTriggeredRef = useRef(false);
 

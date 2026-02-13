@@ -1,9 +1,9 @@
 import { SRGBColorSpace, Texture } from 'three';
 import { useTexture } from '@react-three/drei';
 
-type BookPageTextures = [Texture, Texture, Texture?];
+type TBookPageTextures = [Texture, Texture, Texture?];
 
-interface UseBookPageTexturesParams {
+interface IUseBookPageTexturesParams {
   front: string;
   back: string;
   number: number;
@@ -15,14 +15,14 @@ export const useBookPageTextures = ({
   back,
   number,
   pagesLength,
-}: UseBookPageTexturesParams): BookPageTextures => {
+}: IUseBookPageTexturesParams): TBookPageTextures => {
   const textures = useTexture([
-    `/textures/${front}.jpg`,
-    `/textures/${back}.jpg`,
+    `${import.meta.env.BASE_URL}textures/${front}.jpg`,
+    `${import.meta.env.BASE_URL}textures/${back}.jpg`,
     ...(number === 0 || number === pagesLength - 1
-      ? [`/textures/book-cover-roughness.jpg`]
+      ? [`${import.meta.env.BASE_URL}textures/book-cover-roughness.jpg`]
       : []),
-  ]) as BookPageTextures;
+  ]) as TBookPageTextures;
 
   const [rawPicture, rawPicture2, rawPictureRoughness] = textures;
 

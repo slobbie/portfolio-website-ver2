@@ -1,75 +1,82 @@
-# React + TypeScript + Vite
+# Portfolio Website Ver.2
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[배포 링크](https://slobbie.github.io/portfolio-website-ver2/)
 
-Currently, two official plugins are available:
+## 사용 스택
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+`TypeScript` `React 19` `Emotion` `Zustand` `React Three Fiber` `Three.js` `Framer Motion` `GSAP` `Vite`
 
-## React Compiler
+## 소개
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+React Three Fiber와 Framer Motion을 활용하여 인터랙티브한 3D 그래픽과 스크롤 기반 애니메이션을 포함한 포트폴리오 웹사이트를 개발했습니다. 사용자에게 몰입감 있는 경험을 제공하는 데 중점을 두었습니다.
 
-Note: This will impact Vite dev & build performances.
+## 주요 기능
 
-## Expanding the ESLint configuration
+### IntroduceSection — 스크롤 인터랙션 인트로
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. 배경 이미지 분할/마스킹 애니메이션과 스크롤 연동 패럴랙스 효과 구현
+2. GSAP 기반 SandText 효과 — 글자가 개별적으로 초록색으로 변하며 중력에 의해 떨어지는 애니메이션
+3. Framer Motion `useScroll` + `useTransform` + `useSpring` 조합으로 텍스트 스택 등장/퇴장 시퀀스 구현
+4. "I'm Frontend Developer" 두근두근 바운스 후 트리거 확대 사라짐 연출
+5. WebGL 커스텀 셰이더 기반 Wave 배경 포인트 애니메이션
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### ExperienceSection — 3D 인터랙티브 북
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. React Three Fiber + SkinnedMesh를 활용한 3D 책 오브젝트 구현
+2. Bone 기반 스켈레톤 애니메이션으로 사실적인 페이지 넘김 효과 구현
+3. 페이지별 텍스쳐 로딩 및 프리로딩 시스템으로 사용자 경험 최적화
+4. GSAP Timeline 기반 SVG path 모핑 트랜지션 오버레이 (프로젝트 상세 모달)
+5. 타이핑 텍스트 애니메이션 + 기술 스택 배지 순차 등장 효과
+6. Zustand 기반 전역 페이지 상태 관리
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 아키텍처
+
+1. Feature-based 모듈 구조로 도메인별 관심사 분리
+2. 3D 로직을 Texture / Mesh / Animation 훅으로 세분화하여 단일 책임 원칙 적용
+3. `shared/` 디렉토리를 통한 전역 공통 모듈 관리
+4. GitHub Actions를 활용한 자동 빌드/배포 파이프라인
+
+## 프로젝트 구조
+
+```
+src/
+├── app/                        # 앱 진입점
+│   └── App.tsx
+├── features/                   # 도메인 단위 모듈
+│   ├── introduce/              # 인트로 섹션
+│   │   ├── components/         # SandText, ParallaxText, WaveBackground
+│   │   ├── shaders/            # WebGL 커스텀 셰이더
+│   │   └── index.tsx
+│   └── experience/             # 프로젝트 경험 섹션
+│       ├── components/         # Book, BookPage, Experience, PageButtons, TransitionOverlay
+│       ├── constants/          # 3D 설정 상수
+│       ├── hooks/              # useBookPageMesh, useBookPageAnimation 등
+│       └── index.tsx
+├── shared/                     # 전역 공통 모듈
+│   └── store/                  # Zustand 글로벌 스토어
+└── main.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. 프로젝트 의존성 설치
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+$ yarn
+```
+
+2. 개발 서버 시작
+
+```
+$ yarn dev
+```
+
+3. 프로덕션 빌드
+
+```
+$ yarn build
+```
+
+### <br/>
+
+###

@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
+
 import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
 
-interface TypingTextProps {
+interface ITypingTextProps {
   text: string;
   speed?: number;
   onComplete?: () => void;
 }
 
-const TypingText = ({ text, speed = 30, onComplete }: TypingTextProps) => {
+const TypingText = ({ text, speed = 30, onComplete }: ITypingTextProps) => {
   const [displayedText, setDisplayedText] = useState('');
   const [isComplete, setIsComplete] = useState(false);
   const onCompleteRef = useRef(onComplete);

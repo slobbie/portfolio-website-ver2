@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
+
 import {
   motion,
   useMotionValueEvent,
@@ -8,10 +9,12 @@ import {
   AnimatePresence,
 } from 'framer-motion';
 import styled from '@emotion/styled';
+
+import { usePageStore } from '@/shared/store/usePageStore';
+
 import PageButtons from '@/features/experience/components/PageButtons';
 import ExperienceCanvas from '@/features/experience/components/Experience';
 import TypingText from '@/features/experience/components/TypingText';
-import { usePageStore } from '@/shared/store/usePageStore';
 import TransitionOverlay from '@/features/experience/components/TransitionOverlay';
 
 // 프로젝트 데이터 (이미지는 pages store에서 가져옴)
@@ -326,7 +329,7 @@ const ExperienceSection = () => {
             {currentProject.images.map((img) => (
               <ProjectImage
                 key={img}
-                src={`/textures/${img}.jpg`}
+                src={`${import.meta.env.BASE_URL}textures/${img}.jpg`}
                 alt={currentProject.title}
               />
             ))}
