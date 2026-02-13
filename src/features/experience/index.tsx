@@ -65,8 +65,7 @@ const projectData = [
   },
   {
     title: 'Shared React Native UI Kit',
-    description:
-      '크로스 플랫폼 모바일 앱. 클라우드 서비스와 연동된 실시간 데이터 동기화.',
+    description: '재사용 가능한 UI 컴포넌트 개발',
     tech: ['React Native', 'Storybook'],
     images: ['ui-kit-main', 'ui-kit-sub'],
     detailDescription: [
