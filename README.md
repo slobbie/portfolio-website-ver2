@@ -58,27 +58,3 @@ src/
 │   └── store/                  # Zustand 글로벌 스토어
 └── main.tsx
 ```
-
-## Getting Started
-
-1. 프로젝트 의존성 설치
-
-```
-$ yarn
-```
-
-2. 개발 서버 시작
-
-```
-$ yarn dev
-```
-
-3. 프로덕션 빌드
-
-```
-$ yarn build
-```
-
-### <br/>
-
-###
