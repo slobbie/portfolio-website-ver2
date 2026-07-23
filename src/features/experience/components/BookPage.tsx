@@ -2,10 +2,10 @@ import { useRef } from 'react';
 
 import { Object3D, SkinnedMesh } from 'three';
 
-import { useBookPageTextures } from '@/features/experience/hooks/useBookPageTextures';
-import { useBookPageMesh } from '@/features/experience/hooks/useBookPageMesh';
-import { useBookPageAnimation } from '@/features/experience/hooks/useBookPageAnimation';
 import { PAGE_DEPTH } from '@/features/experience/constants/bookPageConfig';
+import { useBookPageAnimation } from '@/features/experience/hooks/useBookPageAnimation';
+import { useBookPageMesh } from '@/features/experience/hooks/useBookPageMesh';
+import { useBookPageTextures } from '@/features/experience/hooks/useBookPageTextures';
 
 interface IBookPageProps {
   number: number;
