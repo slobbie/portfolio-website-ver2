@@ -3,7 +3,7 @@
 경력과 프로젝트의 판단·구현 과정을 순서대로 보여주는 프론트엔드 개발자
 포트폴리오입니다.
 
-![포트폴리오 메인 화면](docs/design-audit/68-hero-title-gap-24.png)
+![포트폴리오 메인 화면](<img width="1280" height="720" alt="Image" src="https://github.com/user-attachments/assets/07de76da-6ff8-4dc6-8365-1c384fbca491" />)
 
 [배포 사이트](https://slobbie.github.io/portfolio-web/)
 
