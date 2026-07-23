@@ -1,13 +1,7 @@
-import ExperienceSection from '@/features/experience/index';
-import IntroduceSection from '@/features/introduce';
+import { PortfolioPage } from '@/pages/portfolio';
 
 function App() {
-  return (
-    <>
-      <IntroduceSection />
-      <ExperienceSection />
-    </>
-  );
+  return <PortfolioPage />;
 }
 
 export default App;

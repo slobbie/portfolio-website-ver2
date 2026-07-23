@@ -1,4 +1,4 @@
-import { usePageStore } from '@/shared/store/usePageStore';
+import { usePageStore } from '@/shared/store';
 
 import BookPage from '@/features/experience/components/BookPage';
 import { useDelayedPage } from '@/features/experience/hooks/useDelayedPage';

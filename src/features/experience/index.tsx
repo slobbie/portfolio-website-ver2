@@ -10,7 +10,7 @@ import {
 } from 'framer-motion';
 import styled from '@emotion/styled';
 
-import { usePageStore } from '@/shared/store/usePageStore';
+import { usePageStore } from '@/shared/store';
 
 import PageButtons from '@/features/experience/components/PageButtons';
 import ExperienceCanvas from '@/features/experience/components/Experience';

@@ -7,7 +7,7 @@ import { MotionValue, useMotionValueEvent } from 'framer-motion';
 import {
   wavePointsVertexShader,
   wavePointsFragmentShader,
-} from '../shaders/wave';
+} from '@/features/introduce/shaders/wave';
 
 type TSectionType = 'full' | 'left' | 'center' | 'right';
 

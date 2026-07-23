@@ -11,7 +11,7 @@ import {
 } from 'framer-motion';
 import styled from '@emotion/styled';
 
-import SandText from './components/SandText';
+import SandText from '@/features/introduce/components/SandText';
 
 const imgPath = `url(${import.meta.env.BASE_URL}images/bg1.jpg)`;
 
