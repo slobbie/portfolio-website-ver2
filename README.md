@@ -1,60 +1,63 @@
-# Portfolio Website Ver.2
+# 정해석 포트폴리오
 
-![Image](https://github.com/user-attachments/assets/7c75e822-1717-42f2-b17e-29e9b368d78d)
+경력과 프로젝트의 판단·구현 과정을 순서대로 보여주는 프론트엔드 개발자
+포트폴리오입니다.
 
-[배포 링크](https://slobbie.github.io/portfolio-website-ver2/)
+![포트폴리오 메인 화면](docs/design-audit/68-hero-title-gap-24.png)
 
-## 사용 스택
+[배포 사이트](https://slobbie.github.io/portfolio-web/)
 
-`TypeScript` `React 19` `Emotion` `Zustand` `React Three Fiber` `Three.js` `Framer Motion` `GSAP` `Vite`
+## 구성
 
-## 소개
+- 소개 및 핵심 역량
+- 기술 스택
+- 회사별 업무 경험
+- 프로젝트별 Career Details
+- 개인 프로젝트 GiGGY
+- 학력 및 병역
+- Shared RN UIKit을 포함한 Labs
 
-React Three Fiber와 Framer Motion을 활용하여 인터랙티브한 3D 그래픽과 스크롤 기반 애니메이션을 포함한 포트폴리오 웹사이트를 개발했습니다. 사용자에게 몰입감 있는 경험을 제공하는 데 중점을 두었습니다.
 
-## 주요 기능
+## 기술 스택
 
-### IntroduceSection — 스크롤 인터랙션 인트로
-
-1. 배경 이미지 분할/마스킹 애니메이션과 스크롤 연동 패럴랙스 효과 구현
-2. GSAP 기반 SandText 효과 — 글자가 개별적으로 초록색으로 변하며 중력에 의해 떨어지는 애니메이션
-3. Framer Motion `useScroll` + `useTransform` + `useSpring` 조합으로 텍스트 스택 등장/퇴장 시퀀스 구현
-4. "I'm Frontend Developer" 두근두근 바운스 후 트리거 확대 사라짐 연출
-5. WebGL 커스텀 셰이더 기반 Wave 배경 포인트 애니메이션
-
-### ExperienceSection — 3D 인터랙티브 북
-
-1. React Three Fiber + SkinnedMesh를 활용한 3D 책 오브젝트 구현
-2. Bone 기반 스켈레톤 애니메이션으로 사실적인 페이지 넘김 효과 구현
-3. 페이지별 텍스쳐 로딩 및 프리로딩 시스템으로 사용자 경험 최적화
-4. GSAP Timeline 기반 SVG path 모핑 트랜지션 오버레이 (프로젝트 상세 모달)
-5. 타이핑 텍스트 애니메이션 + 기술 스택 배지 순차 등장 효과
-6. Zustand 기반 전역 페이지 상태 관리
-
-### 아키텍처
-
-1. Feature-based 모듈 구조로 도메인별 관심사 분리
-2. 3D 로직을 Texture / Mesh / Animation 훅으로 세분화하여 단일 책임 원칙 적용
-3. `shared/` 디렉토리를 통한 전역 공통 모듈 관리
-4. GitHub Actions를 활용한 자동 빌드/배포 파이프라인
+- React 19
+- TypeScript
+- Emotion
+- Framer Motion
+- Vite
 
 ## 프로젝트 구조
 
-```
+Feature-Sliced Design의 레이어 기준으로 화면과 데이터를 분리했습니다.
+`src` 내부 import와 re-export는 모두 `@/` 경로 alias를 사용합니다.
+
+```text
 src/
-├── app/                        # 앱 진입점
-│   └── App.tsx
-├── features/                   # 도메인 단위 모듈
-│   ├── introduce/              # 인트로 섹션
-│   │   ├── components/         # SandText, ParallaxText, WaveBackground
-│   │   ├── shaders/            # WebGL 커스텀 셰이더
-│   │   └── index.tsx
-│   └── experience/             # 프로젝트 경험 섹션
-│       ├── components/         # Book, BookPage, Experience, PageButtons, TransitionOverlay
-│       ├── constants/          # 3D 설정 상수
-│       ├── hooks/              # useBookPageMesh, useBookPageAnimation 등
-│       └── index.tsx
-├── shared/                     # 전역 공통 모듈
-│   └── store/                  # Zustand 글로벌 스토어
-└── main.tsx
+├── app/                  # 앱 진입점과 전역 스타일
+├── pages/portfolio/      # 포트폴리오 페이지 조합
+├── widgets/
+│   ├── portfolio/        # 포트폴리오 섹션 UI
+│   └── site-header/      # 전역 헤더
+├── entities/portfolio/   # 경력·프로젝트 콘텐츠와 타입
+├── features/             # 기존 인터랙션 기능 모듈
+└── shared/
+    ├── store/            # 공통 상태
+    └── ui/               # 공통 UI 컴포넌트
 ```
+
+## 실행
+
+```bash
+yarn
+yarn dev
+```
+
+프로덕션 빌드와 로컬 확인:
+
+```bash
+yarn lint
+yarn build
+yarn preview
+```
+
+

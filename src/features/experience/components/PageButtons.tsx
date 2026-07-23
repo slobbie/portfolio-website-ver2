@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-import { usePageStore } from '@/shared/store/usePageStore';
+import { usePageStore } from '@/shared/store';
 
 import { usePages } from '@/features/experience/hooks/usePages';
 

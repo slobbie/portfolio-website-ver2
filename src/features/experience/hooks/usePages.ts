@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { usePageStore } from '@/shared/store/usePageStore';
+import { usePageStore } from '@/shared/store';
 
 export const usePages = () => {
   const { pages, initializePages } = usePageStore();
