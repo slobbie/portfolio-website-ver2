@@ -4,7 +4,7 @@ import path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/portfolio-website-ver2/',
+  base: '/portfolio-web/',
   plugins: [
     react({
       babel: {

@@ -3,9 +3,20 @@
 경력과 프로젝트의 판단·구현 과정을 순서대로 보여주는 프론트엔드 개발자
 포트폴리오입니다.
 
-<img width="1280" height="720" alt="Image" src="https://github.com/user-attachments/assets/07de76da-6ff8-4dc6-8365-1c384fbca491" />
 
-[배포 사이트](https://slobbie.github.io/portfolio-web/)
+<p align="center">
+  <img
+    src="https://github.com/user-attachments/assets/07de76da-6ff8-4dc6-8365-1c384fbca491"
+    width="1280"
+    alt="정해석 프론트엔드 개발자 포트폴리오 메인 화면"
+  />
+</p>
+
+<p align="center">
+  <a href="https://slobbie.github.io/portfolio-web/"><strong>배포 사이트 보기</strong></a>
+</p>
+
+
 
 ## 구성
 
@@ -16,7 +27,6 @@
 - 개인 프로젝트 GiGGY
 - 학력 및 병역
 - Shared RN UIKit을 포함한 Labs
-
 
 ## 기술 스택
 
@@ -59,5 +69,3 @@ yarn lint
 yarn build
 yarn preview
 ```
-
-
