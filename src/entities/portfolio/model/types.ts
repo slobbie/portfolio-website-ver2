@@ -42,6 +42,12 @@ type GiggyMatchingChapter = Omit<GiggyChapter, 'background'> & {
   background: readonly string[];
 };
 
+type GiggyDeploymentChapter = {
+  background: readonly string[];
+  flow: string;
+  stack: readonly string[];
+};
+
 export type GiggyContent = {
   title: string;
   subtitle: string;
@@ -49,8 +55,10 @@ export type GiggyContent = {
   scope: readonly string[];
   stack: readonly string[];
   architecture: GiggyChapter;
+  dataAccess: GiggyChapter;
   auth: GiggyChapter;
   matching: GiggyMatchingChapter;
+  deployment: GiggyDeploymentChapter;
 };
 
 export type LabLink = {
