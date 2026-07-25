@@ -38,19 +38,35 @@ export function GiggySection() {
       </GiggyChapter>
 
       <GiggyChapter className="giggy-chapter">
-        <ChapterIndex className="chapter-index">02 / Authentication</ChapterIndex>
-        <h3>JWT 인증과 Device UUID 기반 세션 관리</h3>
+        <ChapterIndex className="chapter-index">02 / Data access</ChapterIndex>
+        <h3>데이터 접근 경계와 트랜잭션 설계</h3>
+        <ContentBlock title="설계 배경" paragraphs={[giggy.dataAccess.background]} />
+        <ContentBlock title="구현 내용" items={giggy.dataAccess.details} />
+        <FlowPanel label="Data access structure">{giggy.dataAccess.flow}</FlowPanel>
+      </GiggyChapter>
+
+      <GiggyChapter className="giggy-chapter">
+        <ChapterIndex className="chapter-index">03 / Authentication</ChapterIndex>
+        <h3>DB 기반 로그인 세션 관리</h3>
         <ContentBlock title="설계 배경" paragraphs={[giggy.auth.background]} />
         <ContentBlock title="구현 내용" items={giggy.auth.details} />
         <FlowPanel label="Authentication flow">{giggy.auth.flow}</FlowPanel>
       </GiggyChapter>
 
       <GiggyChapter className="giggy-chapter">
-        <ChapterIndex className="chapter-index">03 / Realtime services</ChapterIndex>
-        <h3>매칭·채팅·알림 서비스 연계</h3>
+        <ChapterIndex className="chapter-index">04 / Realtime services</ChapterIndex>
+        <h3>매칭·채팅·알림의 저장 및 전송 책임 분리</h3>
         <ContentBlock title="설계 배경" paragraphs={giggy.matching.background} />
         <ContentBlock title="구현 내용" items={giggy.matching.details} />
         <FlowPanel label="Service flow">{giggy.matching.flow}</FlowPanel>
+      </GiggyChapter>
+
+      <GiggyChapter className="giggy-chapter">
+        <ChapterIndex className="chapter-index">05 / Deployment</ChapterIndex>
+        <h3>검증부터 복구까지 연결한 배포 파이프라인</h3>
+        <ContentBlock title="구성 배경" paragraphs={giggy.deployment.background} />
+        <FlowPanel label="Deployment flow">{giggy.deployment.flow}</FlowPanel>
+        <ContentBlock title="Deployment Stack" paragraphs={[giggy.deployment.stack.join(' · ')]} />
       </GiggyChapter>
     </GiggySectionRoot>
   );

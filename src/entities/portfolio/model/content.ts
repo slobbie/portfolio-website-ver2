@@ -32,7 +32,7 @@ export const professionalSummary = [
     label: '04 / Backend Expansion',
     title: '개인 프로젝트 GiGGY',
     description:
-      '백엔드 역량을 확장하기 위해 NestJS와 PostgreSQL로 인증, 매칭, 채팅, 알림 기능을 직접 설계하고 구현했습니다.',
+      'NestJS와 PostgreSQL로 인증·매칭·채팅·알림 기능을 구현하고, 데이터 접근 경계와 DB 기반 로그인 세션 구조를 설계했습니다.',
   },
 ] satisfies readonly ProfessionalSummaryItem[];
 
@@ -47,11 +47,11 @@ export const techGroups = [
   },
   {
     label: 'Backend Experience',
-    items: ['Node.js', 'NestJS', 'Express', 'TypeScript', 'PostgreSQL', 'REST API'],
+    items: ['Node.js', 'NestJS', 'Express', 'TypeScript', 'PostgreSQL', 'MikroORM', 'REST API'],
   },
   {
     label: 'Infrastructure / Tools',
-    items: ['AWS S3', 'Git', 'GitHub'],
+    items: ['AWS S3', 'Docker', 'GitHub Actions', 'AWS ECR', 'AWS EC2', 'Git'],
   },
 ] satisfies readonly TechGroup[];
 
@@ -299,21 +299,20 @@ export const giggy = {
     'React Native 앱과 NestJS 백엔드를 직접 개발했습니다.',
   ],
   scope: [
-    '도메인별 백엔드 서비스 분리',
-    'PostgreSQL 기반 데이터 모델 및 쿼리 구현',
-    'JWT 인증과 Device UUID 기반 세션 관리',
-    '구인 공고·사용자 프로필 기반 매칭 기능 구현',
-    'Socket.IO 실시간 채팅과 알림 이벤트 구현',
-    'FCM 모바일 푸시 및 AWS S3 이미지 처리 연동',
+    '도메인별 NestJS 모듈과 Controller·Service·Repository 계층 구성',
+    'MikroORM과 PostgreSQL을 사용하는 데이터 접근 경계 및 트랜잭션 구조 설계',
+    'JWT와 DB 세션을 결합한 로그인·토큰 갱신·중복 로그인 무효화 구현',
+    '구인 공고·사용자 프로필 기반 매칭과 채팅·일정 흐름 구현',
+    'Socket.IO 실시간 이벤트와 FCM 모바일 푸시 연동',
   ],
-  stack: ['Node.js', 'NestJS', 'TypeScript', 'PostgreSQL', 'Socket.IO', 'JWT', 'Firebase Admin', 'AWS S3', 'Sharp'],
+  stack: ['Node.js', 'NestJS', 'TypeScript', 'PostgreSQL', 'MikroORM', 'Socket.IO', 'JWT', 'Firebase Admin', 'AWS S3'],
   architecture: {
-    background: '인증, 회원, 구인 공고, 사용자 프로필, 매칭, 채팅과 알림 기능이 서로 연결되면서도 각 기능의 역할이 섞이지 않는 구조가 필요했습니다.',
+    background: '인증, 회원, 구인 공고, 사용자 프로필, 매칭, 채팅과 알림이 서로 연결되면서도 각 기능의 데이터와 책임이 섞이지 않는 구조가 필요했습니다.',
     details: [
-      '기능을 인증, 회원, 구인 공고, 사용자 프로필, 매칭, 일정, 채팅, 알림 도메인별 서비스로 분리',
-      'HTTP 요청은 Controller, 비즈니스 흐름은 Service, PostgreSQL 쿼리는 Model 계층으로 역할 분리',
+      '기능을 인증, 회원, 구인 공고, 사용자 프로필, 매칭, 일정, 채팅, 알림 도메인별 모듈로 분리',
+      'HTTP 요청은 Controller, 비즈니스 흐름은 Service, 데이터 접근은 Repository로 역할 분리',
       'REST API와 Socket.IO Gateway가 동일한 인증 및 도메인 서비스를 사용하도록 구성',
-      '이미지 저장과 모바일 푸시는 AWS S3와 Firebase FCM 연동 영역으로 분리',
+      '데이터 저장과 외부 전송을 PostgreSQL, AWS S3, Firebase FCM 연동 영역으로 분리',
     ],
     flow: `Mobile Client
   ├─ HTTPS / REST API
@@ -321,63 +320,103 @@ export const giggy = {
             │
             ▼
 NestJS Backend
-  ├─ Auth Guard / JWT 인증
-  ├─ Controller → Service → Model
-  ├─ Domain Services
+  ├─ Auth Guard / JWT·DB 세션 검증
+  ├─ Controller → Service → Repository
+  ├─ Domain Modules
   │    ├─ Auth / Member
   │    ├─ Job / User Profile
   │    ├─ Match / MatchSchedule
   │    └─ Chat / Notification
-  └─ Storage / External Services
-       ├─ PostgreSQL · 데이터 저장
+  └─ Storage / External
+       ├─ PostgreSQL · MikroORM / DbRunner
        ├─ AWS S3 · 이미지 저장
        └─ Firebase FCM · 모바일 푸시`,
   },
-  auth: {
-    background: '모바일 앱의 로그인 상태를 유지하면서, 같은 계정으로 로그인한 기기를 식별하고 중복 로그인 시 기존 세션을 구분할 필요가 있었습니다.',
+  dataAccess: {
+    background:
+      'Repository마다 ORM과 raw SQL 사용 방식이 달라지면 데이터 변경 지점과 트랜잭션 범위를 추적하기 어려워집니다. 단순 CRUD와 복잡한 SQL, 트랜잭션이 같은 규칙을 따르도록 데이터 접근 경계를 하나로 통일했습니다.',
     details: [
-      'access token과 refresh token을 발급하고 HttpOnly 쿠키로 전달',
-      'refresh token을 PostgreSQL에 저장하고 토큰 갱신 시 서버 데이터와 대조',
-      'NestJS Guard에서 access token을 검증하고 인증된 사용자 정보를 요청에 전달',
-      '로그인 시 Device UUID를 저장하고 이후 요청의 기기 정보와 비교',
-      '동일 계정의 기존 기기 세션을 식별할 수 있도록 로그인 흐름 구성',
+      'Controller와 Service에서는 DB에 접근하지 않고 Repository만 DbRunner 사용',
+      '조회·삽입·수정·삭제는 MikroORM native API를 감싼 공통 인터페이스로 실행',
+      '복잡한 쿼리는 DbRunner.raw()를 통해 PostgreSQL SQL로 관리',
+      '일반 호출과 트랜잭션에서 동일한 데이터 접근 인터페이스 사용',
+      '트랜잭션 콜백에는 해당 트랜잭션에 묶인 DB 컨텍스트만 전달',
+      'SQL 매개변수 바인딩, snake_case 결과의 camelCase 변환과 쿼리 실패 기록을 DB 경계에서 처리',
+      '메시지 저장과 채팅방 마지막 메시지 갱신을 하나의 data-modifying CTE로 처리해 DB 왕복 1회와 원자성 확보',
     ],
-    flow: `로그인 요청
-  → 사용자 확인
-  → Device UUID 확인 및 세션 정보 갱신
+    flow: `Controller / Service
+        │ DB 접근 없음
+        ▼
+Repository
+        │
+        ▼
+DbRunner
+  ├─ CRUD → MikroORM native API
+  ├─ 복잡 쿼리 → raw SQL
+  └─ 트랜잭션 → 동일한 DB 컨텍스트
+        │
+        ▼
+PostgreSQL`,
+  },
+  auth: {
+    background:
+      '동일 계정으로 새로 로그인했을 때 기존 로그인을 서버 인스턴스의 메모리가 아닌 PostgreSQL의 현재 세션을 기준으로 무효화할 수 있어야 했습니다. REST API와 Socket.IO도 같은 로그인 유효성 기준을 사용하도록 구성했습니다.',
+    details: [
+      '로그인할 때마다 새로운 sessionId를 생성하고 refresh token과 함께 PostgreSQL에 저장',
+      'access token과 refresh token에 동일한 sessionId를 포함',
+      'REST API에서는 access token과 refresh token을 HttpOnly 쿠키로 전달',
+      'Guard에서 JWT 검증 후 토큰의 sessionId와 DB의 현재 값을 대조',
+      '새 로그인으로 DB 세션이 교체되면 기존 access token과 Socket.IO 연결을 거부',
+      '토큰 갱신 시 refresh token과 sessionId를 함께 검증하고, 로그아웃 시 DB 세션과 인증 쿠키를 무효화',
+    ],
+    flow: `로그인
+  → 새 sessionId 생성
+  → DB에 sessionId / refresh token 저장
   → access token / refresh token 발급
   → HttpOnly 쿠키 전달
 
-보호 API 요청
-  → access token 쿠키 검증
-  → Device UUID 비교
-  → 사용자 컨텍스트 생성
-  → 도메인 로직 실행
+보호 API 요청 / Socket.IO 연결·이벤트 전송
+  → JWT 검증
+  → 토큰 sessionId와 DB 현재 sessionId 대조
+  → 일치할 때만 요청 또는 이벤트 처리
 
-토큰 갱신 요청
-  → refresh token 쿠키 확인
-  → DB 저장 값과 대조
-  → 새 access token 발급`,
+새 로그인 / 로그아웃
+  → DB sessionId 교체 또는 무효화
+  → 기존 세션의 요청과 이벤트 차단`,
   },
   matching: {
     background: [
       '구인 공고와 사용자 프로필에서 시작된 매칭이 채팅방, 실시간 알림과 근무 일정으로 자연스럽게 이어져야 했습니다.',
-      '각 기능의 데이터 저장 책임은 분리하면서 사용자에게는 하나의 흐름으로 제공했습니다.',
+      '각 기능의 데이터 저장 책임은 분리하면서 사용자에게는 하나의 서비스 흐름으로 제공했습니다.',
     ],
     details: [
       '매칭 서비스에서 구인 공고와 사용자 프로필의 소유자 정보를 확인하고 후속 기능을 연결',
       '매칭 수락 시 기존 채팅방을 조회하거나 새 채팅방 생성',
       'Socket.IO 연결을 사용자별 room으로 관리해 채팅과 인앱 알림 전달',
-      '메시지 저장과 채팅방의 마지막 메시지 갱신을 PostgreSQL 트랜잭션으로 처리',
-      '알림 데이터를 저장한 뒤 Socket.IO 인앱 이벤트와 FCM 모바일 푸시 전송',
+      '메시지 저장과 채팅방 마지막 메시지 갱신을 하나의 SQL 문으로 처리',
+      '알림 데이터를 저장한 뒤 FCM 푸시와 Socket.IO 인앱 이벤트 전송',
+      '이벤트 전송 전 사용자의 현재 DB 세션을 확인해 만료된 소켓 연결 차단',
       '확정된 근무 조건과 일정은 별도 일정 데이터로 저장',
     ],
     flow: `구인 공고 / 사용자 프로필
           → 매칭 요청·수락
           → 채팅방 조회 또는 생성
-          ├─ 메시지 저장 → Socket.IO 실시간 전달
-          ├─ 알림 저장 → 인앱 이벤트 / FCM 푸시
+          ├─ 메시지·마지막 메시지 원자적 저장 → Socket.IO 전달
+          ├─ 알림 저장 → FCM 푸시 / Socket.IO 인앱 이벤트
           └─ 근무 조건 확정 → 일정 저장`,
+  },
+  deployment: {
+    background: [
+      '개발 환경에서 검증한 코드와 운영 서버에 배포되는 결과가 달라지는 문제를 줄이기 위해, Pull Request 검증부터 이미지 생성·배포·복구까지 하나의 파이프라인으로 구성했습니다.',
+      'Pull Request에서 정적 분석과 빌드를 실행하고, 검증을 통과해 main에 병합된 커밋만 Docker 이미지로 생성했습니다. 이미지는 Git commit SHA로 태깅해 AWS ECR에 저장함으로써 실행 중인 서버가 어떤 코드에서 생성됐는지 추적할 수 있도록 했습니다.',
+      '배포 시에는 MikroORM Migration을 애플리케이션 실행보다 먼저 적용하고, 신규 컨테이너가 PostgreSQL을 포함한 필수 의존성과 정상적으로 통신하는지 상태 확인을 수행했습니다. Migration 또는 상태 확인이 실패하면 신규 버전 전환을 중단하고 직전 이미지로 복구해, 실패한 배포가 서비스에 반영되지 않도록 했습니다.',
+    ],
+    flow: `Pull Request → 정적 분석·빌드 검증 → main 병합
+→ commit SHA 기반 Docker 이미지 생성 → AWS ECR 저장
+→ DB Migration → 신규 컨테이너 실행 → 상태 확인
+   ├─ 성공 → 신규 버전 유지
+   └─ 실패 → 배포 중단·직전 이미지 복구`,
+    stack: ['GitHub Actions', 'Docker', 'AWS ECR', 'AWS EC2', 'MikroORM Migration'],
   },
 } satisfies GiggyContent;
 
