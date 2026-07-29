@@ -29,21 +29,30 @@ export type CareerProject = {
   approach: readonly string[];
   keyWork: readonly string[];
   results: readonly string[];
-  bridge?: readonly string[];
+  tech: readonly string[];
 };
 
-type GiggyChapter = {
+type GiggyFlowChapter = {
   background: string;
   details: readonly string[];
   flow: string;
+  note?: string;
 };
 
-type GiggyMatchingChapter = Omit<GiggyChapter, 'background'> & {
-  background: readonly string[];
+type GiggyTestStat = {
+  label: string;
+  value: string;
+};
+
+type GiggyTestingChapter = {
+  summary: readonly string[];
+  stats: readonly GiggyTestStat[];
 };
 
 type GiggyDeploymentChapter = {
-  background: readonly string[];
+  background: string;
+  details: readonly string[];
+  results: readonly string[];
   flow: string;
   stack: readonly string[];
 };
@@ -54,10 +63,10 @@ export type GiggyContent = {
   intro: readonly string[];
   scope: readonly string[];
   stack: readonly string[];
-  architecture: GiggyChapter;
-  dataAccess: GiggyChapter;
-  auth: GiggyChapter;
-  matching: GiggyMatchingChapter;
+  architecture: GiggyFlowChapter;
+  dataAccess: GiggyFlowChapter;
+  realtime: GiggyFlowChapter;
+  testing: GiggyTestingChapter;
   deployment: GiggyDeploymentChapter;
 };
 

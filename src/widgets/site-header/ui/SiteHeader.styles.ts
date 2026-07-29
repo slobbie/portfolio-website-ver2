@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
+import { media } from '@/shared/config/theme';
 
 export const Header = styled.header`
   position: sticky;
@@ -7,27 +9,40 @@ export const Header = styled.header`
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  min-height: 56px;
+  /* 섹션 제목이 이 높이를 기준으로 붙으므로 토큰에서 가져옵니다. */
+  min-height: var(--header-height);
   border-top: 2px solid var(--text);
-  border-bottom: 1px solid var(--line-strong);
+  border-bottom: var(--border-hairline) solid var(--line-strong);
   background: rgba(9, 9, 9, 0.92);
   backdrop-filter: blur(18px);
+`;
 
-  @media (max-width: 640px) {
-    min-height: 52px;
-  }
+/**
+ * 문서 전체 읽은 정도를 헤더 아래 선으로 표시합니다.
+ *
+ * 높이를 바꾸지 않는 방식으로 둔 이유는, 고정 헤더의 높이가 변하면 아래 본문이
+ * 그만큼 밀려 스크롤 위치와 서로 밀고 당기기 때문입니다.
+ */
+export const HeaderProgress = styled(motion.span)`
+  position: absolute;
+  right: 0;
+  bottom: calc(-1 * var(--border-hairline));
+  left: 0;
+  height: var(--border-hairline);
+  background: var(--accent);
+  transform-origin: left center;
 `;
 
 export const Availability = styled.span`
   display: inline-flex;
   align-items: center;
   justify-self: start;
-  gap: 9px;
+  gap: var(--space-2);
   color: var(--text-soft);
-  font-size: 0.86rem;
+  font-size: var(--text-sm);
   letter-spacing: -0.01em;
 
-  @media (max-width: 900px) {
+  ${media.tablet} {
     display: none;
   }
 `;
@@ -43,24 +58,45 @@ export const AvailabilityDot = styled.span`
 export const HeaderNav = styled.nav`
   display: flex;
   justify-self: end;
-  gap: 22px;
+  gap: var(--space-6);
 
   a {
+    position: relative;
+    padding-bottom: var(--space-1);
     color: var(--text-soft);
-    font-size: 0.86rem;
+    font-size: var(--text-sm);
     letter-spacing: -0.01em;
-    transition: color 180ms ease;
 
-    &:hover {
+    &[data-active='true'] {
       color: var(--text);
     }
   }
 
-  @media (max-width: 640px) {
-    gap: 12px;
-
+  ${media.hover} {
     a {
-      font-size: 0.72rem;
+      transition: color var(--dur-hover) var(--ease);
+
+      &:hover {
+        color: var(--text);
+      }
     }
   }
+
+  ${media.mobile} {
+    gap: var(--space-3);
+
+    a {
+      font-size: var(--text-3xs);
+    }
+  }
+`;
+
+/** 현재 구간 표시. layoutId로 메뉴 사이를 미끄러져 이동합니다. */
+export const NavIndicator = styled(motion.span)`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--border-marker);
+  background: var(--accent);
 `;
