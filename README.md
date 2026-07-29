@@ -5,10 +5,10 @@
 
 
 <p align="center">
-  <img
-    src="https://github.com/user-attachments/assets/07de76da-6ff8-4dc6-8365-1c384fbca491"
+  <img   
     width="1280"
-    alt="정해석 개발자 포트폴리오 메인 화면"
+    alt="정해석 개발자 포트폴리오 메인 화면" 
+    src="https://github.com/user-attachments/assets/752ff8f2-ac8d-43b9-9679-8d8bee302d6c" 
   />
 </p>
 
