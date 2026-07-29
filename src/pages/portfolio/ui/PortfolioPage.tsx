@@ -1,5 +1,4 @@
 import {
-  AdditionalInformationSection,
   CareerSection,
   ExperienceSection,
   GiggySection,
@@ -35,7 +34,6 @@ export function PortfolioPage() {
             <ExperienceSection />
             <CareerSection />
             <GiggySection />
-            <AdditionalInformationSection />
             <LabsSection />
           </main>
         </SiteShell>

@@ -1,10 +1,14 @@
-import { useReducedMotion, type Variants } from 'framer-motion';
+import type { ReactNode } from 'react';
+
+import { useMagnetic, usePress } from '@/shared/lib/interaction';
+import { useRevealGroup } from '@/shared/lib/motion';
+import { SplitText } from '@/shared/ui';
 
 import {
   Hero,
   HeroCopy,
-  HeroIntro,
   HeroKicker,
+  HeroLink,
   HeroLinks,
   HeroName,
   HeroRole,
@@ -13,75 +17,57 @@ import {
 
 const EMAIL = 'haeru9410@gmail.com';
 
-const createRevealVariants = (reduceMotion: boolean): {
-  group: Variants;
-  item: Variants;
-} => ({
-  group: {
-    hidden: {},
-    visible: {
-      transition: {
-        delayChildren: reduceMotion ? 0 : 0.08,
-        staggerChildren: reduceMotion ? 0 : 0.11,
-      },
-    },
-  },
-  item: {
-    hidden: {
-      opacity: 0,
-      y: reduceMotion ? 0 : 24,
-      filter: reduceMotion ? 'none' : 'blur(6px)',
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: 'blur(0px)',
-      transition: {
-        duration: reduceMotion ? 0 : 0.68,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  },
-});
+type HeroContactProps = {
+  href: string;
+  external?: boolean;
+  children: ReactNode;
+};
+
+/** 자석 효과는 요소마다 위치를 재야 해서 링크 단위로 분리합니다. */
+function HeroContact({ href, external = false, children }: HeroContactProps) {
+  const magnetic = useMagnetic();
+  /* 위치는 자석이 맡으므로 여기서는 눌림만 더합니다. 둘 다 잡으면 서로 값을 덮습니다. */
+  const press = usePress({ lift: 'none' });
+
+  return (
+    <HeroLink
+      href={href}
+      {...(external ? { target: '_blank', rel: 'noreferrer' } : null)}
+      {...magnetic}
+      {...press}
+    >
+      {children}
+    </HeroLink>
+  );
+}
 
 export function HeroSection() {
-  const shouldReduceMotion = useReducedMotion() ?? false;
-  const reveal = createRevealVariants(shouldReduceMotion);
+  const { group, nested, item } = useRevealGroup('lg', {
+    stagger: 'hero',
+    delayChildren: 0.08,
+    blur: true,
+  });
 
   return (
     <Hero className="hero" id="profile">
-      <HeroCopy
-        className="hero-copy"
-        initial={shouldReduceMotion ? false : 'hidden'}
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.35 }}
-        variants={reveal.group}
-      >
-        <HeroTitle className="hero-title" variants={reveal.group}>
-          <HeroRole className="hero-role" variants={reveal.item}>
-            Frontend Developer
+      <HeroCopy className="hero-copy" {...group}>
+        <HeroTitle className="hero-title" {...nested}>
+          <HeroRole className="hero-role" {...item}>
+            Developer
           </HeroRole>
-          <HeroName className="hero-name" variants={reveal.item}>
-            정해석
+          <HeroName className="hero-name">
+            <SplitText text="정해석" delayChildren={0.19} />
           </HeroName>
         </HeroTitle>
-        <HeroKicker className="hero-kicker" variants={reveal.item}>
-          클라이언트와 서버 사이의 흐름을 설계합니다.
+        <HeroKicker className="hero-kicker" {...item}>
+          반복되는 문제를 자동화하고 재사용 가능한 구조를 만드는 개발자
         </HeroKicker>
-        <HeroIntro className="hero-intro" variants={reveal.item}>
-          클라이언트와 실시간 통신 경험을 바탕으로 Node.js 백엔드까지 구현 범위를 확장해 온
-          개발자입니다.
-        </HeroIntro>
-        <HeroLinks
-          className="hero-links"
-          aria-label="연락처 및 외부 링크"
-          variants={reveal.item}
-        >
-          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-          <a href="tel:+821066122297">010-6612-1297</a>
-          <a href="https://github.com/slobbie" target="_blank" rel="noreferrer">
+        <HeroLinks className="hero-links" aria-label="연락처 및 외부 링크" {...item}>
+          <HeroContact href={`mailto:${EMAIL}`}>{EMAIL}</HeroContact>
+          <HeroContact href="tel:+821066121297">010-6612-1297</HeroContact>
+          <HeroContact href="https://github.com/slobbie" external>
             GitHub
-          </a>
+          </HeroContact>
         </HeroLinks>
       </HeroCopy>
     </Hero>
