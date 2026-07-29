@@ -4,11 +4,79 @@
   --surface-strong: #151515;
   --text: #f1f1ed;
   --text-soft: #b4b4ad;
-  --muted: #777771;
-  --line: #292927;
-  --line-strong: #44443f;
+  --muted: #9a9a92;
+  --line: #33332f;
+  --line-strong: #4f4f49;
   --accent: #70e18b;
   --content-width: 1200px;
+
+  /* 간격: 4px 단위. 이름의 숫자 × 4 = px */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-18: 72px;
+  --space-20: 80px;
+  --space-22: 88px;
+  --space-24: 96px;
+  --space-26: 104px;
+  --space-28: 112px;
+  --space-36: 144px;
+
+  --border-hairline: 1px;
+  --border-marker: 2px;
+
+  /*
+   * 상태 반응(호버·포커스·클릭) 토큰.
+   *
+   * 등장 모션과 같은 이징을 쓰되 지속 시간만 짧게 가져가, 반응이 등장보다
+   * 느려 보이지 않게 합니다. 이동량은 선 굵기와 같은 단위(2·4px)로 맞춥니다.
+   */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-tap: 90ms;
+  --dur-hover: 160ms;
+  --dur-state: 240ms;
+  --lift: 2px;
+  --shift: 4px;
+
+  /* 전역 헤더의 실제 높이. 섹션 제목을 그 아래에 붙일 때 기준으로 씁니다. */
+  --header-height: 56px;
+
+  /* 고정 헤더 아래로 앵커가 가려지지 않도록 잡아 두는 기준 높이 */
+  --header-offset: 106px;
+
+  /* 본문 타이포: 고정 크기 */
+  --text-3xs: 0.72rem;
+  --text-2xs: 0.76rem;
+  --text-xs: 0.8rem;
+  --text-sm: 0.86rem;
+  --text-base: 0.94rem;
+  --text-md: 1rem;
+  --text-lg: 1.05rem;
+  --text-xl: 1.5rem;
+
+  /* 표제 타이포: 화면 폭에 따라 유동. 모바일 값은 아래 미디어 쿼리에서 재정의 */
+  --text-display: clamp(4.75rem, 8.6vw, 7.75rem);
+  --text-title: clamp(2rem, 3vw, 3rem);
+  --text-lead: clamp(1.15rem, 1.8vw, 1.75rem);
+  --text-h1: clamp(2.6rem, 5.2vw, 5.5rem);
+  --text-h2: clamp(2.2rem, 4.5vw, 4.6rem);
+  --text-h3: clamp(2rem, 4vw, 3.8rem);
+  --text-h4: clamp(2rem, 3.4vw, 3.25rem);
+  --text-h5: clamp(1.5rem, 2.5vw, 2.3rem);
+  --text-h6: clamp(1.7rem, 2.1vw, 2rem);
+  --text-entry: clamp(1.05rem, 1.55vw, 1.3rem);
+  --text-entry-meta: clamp(1rem, 1.35vw, 1.12rem);
+
   color: var(--text);
   background: var(--background);
   font-family:
@@ -32,7 +100,7 @@
 html {
   position: relative;
   scroll-behavior: smooth;
-  scroll-padding-top: 108px;
+  scroll-padding-top: calc(var(--header-offset) + var(--space-1) / 2);
 }
 
 body {
@@ -95,7 +163,20 @@ ul {
 }
 
 @media (max-width: 640px) {
+  :root {
+    --text-display: clamp(4.2rem, 24vw, 6.2rem);
+    --text-title: clamp(1.75rem, 8vw, 2rem);
+    --text-h1: clamp(2.75rem, 14vw, 4.4rem);
+    --text-h2: clamp(2.5rem, 13vw, 4rem);
+    --text-h3: clamp(2.15rem, 11vw, 3.4rem);
+    --text-h4: clamp(2rem, 10vw, 3rem);
+  }
+
   html {
-    scroll-padding-top: 76px;
+    scroll-padding-top: var(--space-18);
+  }
+
+  :root {
+    --header-height: 52px;
   }
 }

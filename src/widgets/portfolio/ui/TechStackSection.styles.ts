@@ -1,30 +1,35 @@
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 import { PageSection } from '@/shared/ui';
+import { media } from '@/shared/config/theme';
 
 export const TechSection = styled(PageSection)`
   padding-bottom: 0;
 `;
 
-export const TechList = styled.div`
-  border-top: 1px solid var(--line-strong);
-`;
+/* 테두리는 항목이 소유합니다. 컨테이너가 그리면 등장 전 영역까지 선이 먼저 보입니다. */
+export const TechList = styled(motion.div)``;
 
-export const TechRow = styled.div`
+export const TechRow = styled(motion.div)`
   display: grid;
   grid-template-columns: minmax(220px, 1fr) minmax(0, 3fr);
-  gap: 48px;
+  gap: var(--space-12);
   align-items: center;
-  padding: 24px 0;
-  border-bottom: 1px solid var(--line);
+  padding: var(--space-6) 0;
+  border-bottom: var(--border-hairline) solid var(--line);
+
+  &:first-of-type {
+    border-top: var(--border-hairline) solid var(--line-strong);
+  }
 
   h3 {
     color: var(--text-soft);
-    font-size: 0.9rem;
+    font-size: var(--text-base);
     font-weight: 500;
   }
 
-  @media (max-width: 640px) {
+  ${media.mobile} {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: var(--space-4);
   }
 `;

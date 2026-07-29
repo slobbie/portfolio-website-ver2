@@ -1,34 +1,69 @@
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
+import { media } from '@/shared/config/theme';
 
-export const Block = styled.section<{
+export const Block = styled(motion.section)<{
   tone: 'default' | 'accent';
   variant: 'default' | 'card';
 }>`
+  position: relative;
   display: grid;
   grid-template-columns: 150px minmax(0, 1fr);
-  gap: 34px;
-  padding: 32px 0;
-  border-bottom: 1px solid var(--line);
+  gap: var(--space-9);
+  padding: var(--space-8) 0;
+  /* 색은 의사요소가 그리고, border는 기존 박스 높이만 유지합니다. */
+  border-bottom: var(--border-hairline) solid transparent;
+
+  /* 구분선을 의사요소로 그려 좌에서 우로 뻗어 나가게 합니다. */
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: var(--border-hairline);
+    background: var(--line);
+    transform: scaleX(var(--line-scale, 1));
+    transform-origin: left center;
+  }
+
+  /* 테두리를 가진 블록 앞에서는 구분선이 그 블록의 선처럼 보여서 제거합니다. */
+  &:has(+ .detail-block--accent)::after {
+    display: none;
+  }
+
+  /* 마지막 블록의 구분선은 다음 섹션의 경계선과 겹쳐 두 줄로 보이므로 제거합니다. */
+  &:last-child::after {
+    display: none;
+  }
 
   ${({ tone }) =>
     tone === 'accent' &&
     `
-      margin-top: 14px;
-      padding: 32px 26px;
-      border: 1px solid rgba(112, 225, 139, 0.23);
+      margin-top: var(--space-4);
+      padding: var(--space-8) var(--space-7);
+      border: var(--border-hairline) solid rgba(112, 225, 139, 0.23);
       background: rgba(112, 225, 139, 0.035);
+
+      &::after {
+        display: none;
+      }
     `}
 
   ${({ variant }) =>
     variant === 'card' &&
     `
       display: block;
-      padding: 30px;
-      border: 1px solid var(--line-strong);
+      padding: var(--space-8);
+      border: var(--border-hairline) solid var(--line-strong);
       background: var(--surface);
 
+      &::after {
+        display: none;
+      }
+
       h4 {
-        margin-bottom: 22px;
+        margin-bottom: var(--space-6);
       }
 
       ul {
@@ -39,7 +74,7 @@ export const Block = styled.section<{
 
   h4 {
     color: ${({ tone }) => (tone === 'accent' ? 'var(--accent)' : 'var(--muted)')};
-    font-size: 0.78rem;
+    font-size: var(--text-2xs);
     font-weight: 500;
     line-height: 1.5;
   }
@@ -48,7 +83,7 @@ export const Block = styled.section<{
   ul {
     grid-column: 2;
     color: var(--text-soft);
-    font-size: 0.94rem;
+    font-size: var(--text-base);
     line-height: 1.82;
     word-break: keep-all;
   }
@@ -64,29 +99,29 @@ export const Block = styled.section<{
 
   ul {
     display: grid;
-    gap: 8px;
+    gap: var(--space-2);
     list-style: none;
   }
 
   li {
     position: relative;
-    padding-left: 17px;
+    padding-left: var(--space-4);
 
     &::before {
       position: absolute;
       top: 0.72em;
       left: 0;
-      width: 4px;
-      height: 4px;
+      width: var(--space-1);
+      height: var(--space-1);
       border-radius: 50%;
       background: var(--muted);
       content: '';
     }
   }
 
-  @media (max-width: 640px) {
+  ${media.mobile} {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: var(--space-4);
     padding: ${({ tone, variant }) =>
       variant === 'card' ? '30px' : tone === 'accent' ? '24px 20px' : '26px 0'};
 
