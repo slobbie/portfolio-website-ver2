@@ -196,12 +196,31 @@ export const CareerProjectTitle = styled.header`
   }
 
   h3 {
-    max-width: 800px;
+    max-width: none;
     margin-top: var(--space-3);
-    font-size: var(--text-h3);
+    font-size: clamp(1.9rem, 3vw, 3rem);
     line-height: 1.08;
     letter-spacing: -0.06em;
+    white-space: nowrap;
     word-break: keep-all;
+  }
+
+  h3[data-compound='true'] {
+    display: flex;
+    align-items: center;
+
+    span {
+      display: block;
+      line-height: 1;
+    }
+
+    .career-project-separator {
+      white-space: pre;
+    }
+
+    .career-project-description {
+      transform: translateY(0.06em);
+    }
   }
 
   time {
@@ -211,6 +230,20 @@ export const CareerProjectTitle = styled.header`
     font-size: var(--text-xs);
   }
 
+  ${media.mobile} {
+    h3 {
+      font-size: clamp(2rem, 10vw, 2.75rem);
+      white-space: normal;
+    }
+
+    h3[data-compound='true'] {
+      display: block;
+
+      span {
+        display: inline;
+      }
+    }
+  }
 `;
 
 export const CareerProjectBody = styled.div`

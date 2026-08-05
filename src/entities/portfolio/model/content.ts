@@ -1,4 +1,5 @@
 import type {
+  AdditionalInformationItem,
   CareerProject,
   ExperienceOverviewItem,
   GiggyContent,
@@ -9,12 +10,25 @@ import type {
 
 const assetPath = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 
+export const additionalInformation = [
+  {
+    title: '학력',
+    detail: '경기기계공업고등학교 | 신소재 학과 졸업',
+    duration: '2010.03 ~ 2013.02',
+  },
+  {
+    title: '병역',
+    detail: '육군 병장 만기 전역',
+    duration: '2015.04 ~ 2017.01',
+  },
+] satisfies readonly AdditionalInformationItem[];
+
 export const professionalSummary = [
   {
     label: '01 / Harness',
-    title: '하네스 시스템 구축',
+    title: 'AI 개발 하네스',
     description:
-      '문서 컨텍스트, 공유 ESLint와 Git·CI 검증을 연결해 AI와 개발자가 동일한 아키텍처와 작업 규칙을 따르는 하네스 시스템을 구축했습니다.',
+      '역할별 서브에이전트로 컨텍스트와 권한을 분리하고, 반복 작업은 스킬·스크립트로 고정했으며 Hook과 정적 분석을 통해 작업 단계별로 검증했습니다.',
   },
   {
     label: '02 / Localization',
@@ -50,24 +64,18 @@ export const professionalSummary = [
 
 export const techGroups = [
   {
-    label: 'Frontend',
-    items: ['React Native', 'React', 'Zustand', 'React Query'],
-  },
-  {
-    label: 'Realtime / Integration',
-    items: ['WebSocket', 'Socket.IO', 'STOMP', 'FCM', 'Native Module'],
-  },
-  {
-    label: 'Backend Experience',
-    items: ['Node.js', 'NestJS', 'Express', 'TypeScript', 'PostgreSQL', 'MikroORM', 'REST API'],
-  },
-  {
-    label: 'Infrastructure / Tools',
-    items: ['AWS S3', 'Docker', 'GitHub Actions', 'AWS ECR', 'AWS EC2', 'Git'],
-  },
-  {
-    label: 'Convention / Quality',
-    items: ['ESLint', 'Husky', 'lint-staged', 'commitlint', 'Turborepo', 'pnpm', 'Storybook'],
+    label: 'Skills',
+    items: [
+      'TypeScript',
+      'Node.js',
+      'NestJS',
+      'Express',
+      'PostgreSQL',
+      'MikroORM',
+      'React Native',
+      'React',
+      'WebSocket',
+    ],
   },
 ] satisfies readonly TechGroup[];
 
@@ -75,10 +83,10 @@ export const experienceOverview = [
   {
     company: '에스제이소프트텍',
     role: '개발팀',
-    duration: '2026.04 — 현재',
+    duration: '2026.04 ~ 현재',
     highlights: [
-      '문서 컨텍스트·공유 ESLint·Git Hook·CI를 연결한 AI 협업 하네스 시스템을 구축했습니다.',
-      '고객용·점주용 앱이 함께 사용하는 STOMP 채팅 모듈을 설계하고 구현했습니다.',
+      '역할별 서브에이전트와 반복 작업용 스킬을 구성하고, AI Hook·ESLint·Git Hook·CI 검증을 연결한 AI 개발 하네스를 구축했습니다.',
+      '고객용·점주용 공통 사용 채팅 모듈을 설계하고 구현했습니다.',
       '공통 UI를 웹·모바일 디자인 시스템으로 구성하고 기능별 패키지로 분리했습니다.',
     ],
     tech: [
@@ -99,22 +107,23 @@ export const experienceOverview = [
   {
     company: '미니레코드',
     role: '개발팀 매니저',
-    duration: '2024.07 — 2025.06',
+    duration: '2024.07 ~ 2025.06',
     highlights: [
       'WebSocket 응답 수신부터 모바일 PCM 오디오 재생까지의 처리 흐름을 구현했습니다.',
       '번역 데이터 반영과 코드의 다국어 적용을 자동화하는 스크립트를 구현했습니다.',
       'API 정의를 기준으로 React Query 조회 구성을 생성하는 공통 모듈을 구현했습니다.',
+      '사용자 업로드 이미지를 용도에 맞게 리사이징·WebP로 변환하고, 정적 이미지와 동적 이미지의 캐싱 정책을 분리했습니다.',
     ],
     tech: ['React Native', 'TypeScript', 'WebSocket', 'PCM', 'Google Sheets API', 'Babel AST', 'React Query', 'Axios'],
   },
   {
     company: '이로운소프트',
     role: '개발팀 주임',
-    duration: '2022.08 — 2024.04',
+    duration: '2022.08 ~ 2024.04',
     highlights: [
       '차트별 WebSocket 연결을 단일 연결과 식별자 기반 데이터 분배 구조로 정리했습니다.',
       '공용 웨어러블 기기의 등록·지급·반납·이력 관리와 공공데이터 수집 서버를 구현했습니다.',
-      'Android·iOS 차량 진단 SDK의 BLE, VIN, OBD-II 기능을 React Native Native Module로 연결했습니다.',
+      'Android·iOS 차량 진단 SDK의 BLE·VIN·OBD-II 기능을 React Native Native Module로 연결했습니다.',
     ],
     tech: ['Node.js', 'Express', 'TypeScript', 'PostgreSQL', 'React Native', 'React', 'WebSocket', 'Highcharts', 'Native Module'],
   },
@@ -122,81 +131,49 @@ export const experienceOverview = [
 
 export const careerProjects = [
   {
-    company: '에스제이소프트텍',
+    company: '에스제이소프트텍 | 개발팀',
     companyId: 'sjsofttech',
-    title: 'AI 협업 하네스 시스템 구축',
-    duration: '2026.04 — 현재',
+    title: 'NOWEATS | 베트남 다낭 지역 배달 플랫폼',
+    duration: '2026.04 ~ 현재',
     background: [
-      '기존에도 AI 작업 규칙이 있었지만 문서 중심의 느슨한 구조라 아키텍처와 코드 규칙을 벗어나는 사례가 반복됐습니다. 위반 사항이 코드 리뷰에서 뒤늦게 발견되고 같은 지적이 반복되는 문제를 작업 단계에서 줄이고자 했습니다.',
+      '베트남 다낭 지역에서 사용하는 고객용·점주용 배달 앱을 함께 개발했습니다. 두 앱의 채팅과 UI를 재사용하면서도 플랫폼별 구현을 분리하고, AI가 동일한 작업 규칙과 검증 절차를 따를 수 있는 개발 구조가 필요했습니다.',
     ],
     problems: [],
     roleHeading: '역할',
-    roles: ['모노레포의 AI·개발자 공통 작업 규칙과 검증 시스템 설계·구축'],
+    roles: ['고객용·점주용 앱의 공통 구조와 AI 개발 하네스 설계·구현'],
     approach: [],
     keyWork: [
-      'CLAUDE.md를 규칙의 진입점으로 두고, 아키텍처·모바일·웹·테스트·인프라 규칙 20여 종을 작업 맥락별로 분리해 참조하도록 구성했습니다. 각 규칙에는 허용·금지 기준과 참고 구현을 함께 제공했습니다.',
-      '공유 ESLint 설정에 모듈별 허용 참조 범위와 네이밍 패턴을 정의했습니다. 상위 기능을 잘못 참조하거나 정해진 진입점 대신 내부 파일을 직접 가져오는 코드, 네이밍 위반은 pre-commit과 CI에서 오류로 처리했습니다.',
-      'Husky로 보호 브랜치 직접 커밋, 시크릿, 충돌 마커와 커밋 메시지를 검사하고 push 전에 타입 검사를 실행했습니다.',
+      'AI 개발 하네스: 아키텍처·모바일·웹·테스트·인프라 규칙 20여 종을 작업 맥락별로 분리하고, 조사·구현·검증 작업을 역할별 서브에이전트로 구성했습니다. 반복 작업은 스킬과 스크립트로 고정하고, 필수 절차는 AI Hook·ESLint·Git Hook·CI에서 단계별로 검증했습니다.',
+      '공통 실시간 채팅: 메시지 전송·읽음·이벤트 구독을 공통 인터페이스로 구성했습니다. 앱별 설정은 외부에서 주입하고 연결·구독과 재연결 정책은 공통 모듈에서 관리했습니다.',
+      '디자인 시스템: 공통 컴포넌트의 이름과 인터페이스를 통일하고 웹·네이티브 구현을 분리했습니다. 컴포넌트·Hooks·Motion을 패키지로 나눠 의존성과 변경 범위를 독립적으로 관리했습니다.',
     ],
     results: [
-      '코드 리뷰에서 규칙 위반을 사후 발견하던 방식에서 문서·ESLint·Git Hook·CI가 작업 단계별로 검증하는 구조로 전환해, 같은 규칙 위반과 리뷰 지적이 반복되는 비용을 줄였습니다.',
+      '고객용·점주용 앱이 채팅과 UI 인터페이스를 공유하면서 앱별 설정과 플랫폼별 구현은 독립적으로 변경할 수 있도록 구성했습니다. AI 작업은 역할별로 분리하고 반복 절차와 검증을 자동화했습니다.',
     ],
     tech: [
+      'React Native',
+      'React',
       'TypeScript',
+      'STOMP',
+      'WebSocket',
+      'Zustand',
+      'React Query',
+      'Storybook',
+      'Claude Code',
+      'Sub-agent',
+      'Skill',
+      'Hook',
       'ESLint',
-      'eslint-plugin-boundaries',
       'Husky',
-      'lint-staged',
-      'commitlint',
-      'pnpm',
       'Turborepo',
       'GitHub Actions',
     ],
   },
   {
-    company: '에스제이소프트텍',
-    companyId: 'sjsofttech',
-    title: '고객용·점주용 앱 공통 실시간 채팅',
-    background: [
-      '고객용 앱과 점주용 앱을 동시에 개발하면서 공통 채팅 기능을 하나의 모듈로 구성했습니다. 글로벌 서비스의 불안정한 모바일 네트워크 환경을 고려해 재연결 간격과 중단 기준을 일관되게 관리해야 했습니다.',
-    ],
-    problems: [],
-    roleHeading: '역할',
-    roles: ['메시지 처리와 연결 관리를 재사용 가능한 실시간 채팅 모듈로 설계·구현'],
-    approach: [],
-    keyWork: [
-      '메시지 전송·읽음·이벤트 구독을 공통 인터페이스로 구성했습니다.',
-      '앱별 설정은 외부에서 주입하고 연결·구독 처리는 공통 모듈로 분리했습니다.',
-      '재연결 정책을 중앙화해 고객·점주 앱이 동일한 기준을 사용하도록 했습니다.',
-    ],
-    results: [],
-    tech: ['React Native', 'React', 'TypeScript', 'STOMP', 'WebSocket', 'Zustand', 'React Query'],
-  },
-  {
-    company: '에스제이소프트텍',
-    companyId: 'sjsofttech',
-    title: 'React Native·React 디자인 시스템 개발',
-    background: [
-      '동일한 UI가 사용하는 컴포넌트마다 하드코딩되어 중복 구현되고 있었습니다. 공통 UI를 디자인 시스템으로 만들고 기능별 패키지로 분리해 재사용할 수 있도록 구성했습니다.',
-    ],
-    problems: [],
-    roleHeading: '역할',
-    roles: ['웹·모바일 디자인 시스템 설계·개발'],
-    approach: [],
-    keyWork: [
-      '공통 컴포넌트의 이름과 인터페이스를 통일하고, 웹·네이티브 구현을 분리했습니다.',
-      '컴포넌트·Hooks·Motion을 패키지로 분리해 의존성과 변경 범위를 독립적으로 관리했습니다.',
-    ],
-    results: [
-      '웹과 모바일에서 같은 인터페이스를 사용하면서 플랫폼별 변경이 다른 영역으로 전파되지 않도록 구성했습니다.',
-    ],
-    tech: ['React Native', 'React', 'TypeScript', 'Storybook'],
-  },
-  {
-    company: '미니레코드',
+    company: '미니레코드 | 개발팀 매니저',
     companyId: 'minirecord',
     title: 'AI 음성 대화 서비스 실시간 오디오 재생',
-    duration: '2024.07 — 2025.06',
+    duration: '2024.07 ~ 2025.06',
     background: [
       'WebSocket으로 받은 WAV 조각을 개별 오디오처럼 재생하면 오디오를 열고 닫는 사이에 팝핑 노이즈가 발생했습니다. 바이너리 조각에서 PCM 데이터를 추출해 하나의 재생 흐름에 연속으로 전달할 필요가 있었습니다.',
     ],
@@ -215,7 +192,7 @@ export const careerProjects = [
     tech: ['React Native', 'TypeScript', 'WebSocket', 'PCM'],
   },
   {
-    company: '미니레코드',
+    company: '미니레코드 | 개발팀 매니저',
     companyId: 'minirecord',
     title: '번역 데이터 동기화와 다국어 적용 자동화',
     background: [
@@ -234,7 +211,7 @@ export const careerProjects = [
     tech: ['TypeScript', 'Google Sheets API', 'Babel AST', 'react-i18next'],
   },
   {
-    company: '미니레코드',
+    company: '미니레코드 | 개발팀 매니저',
     companyId: 'minirecord',
     title: 'API 정의 기반 React Query 조회 구성 자동화',
     background: [
@@ -254,10 +231,31 @@ export const careerProjects = [
     tech: ['TypeScript', 'React Query', 'Axios'],
   },
   {
-    company: '이로운소프트',
+    company: '미니레코드 | 개발팀 매니저',
+    companyId: 'minirecord',
+    title: '이미지 최적화 및 유형별 캐싱 전략 구현',
+    background: [
+      '사용자 업로드 이미지의 크기와 포맷이 일정하지 않아 원본 이미지가 그대로 전송됐고, 동일한 이미지를 반복해서 내려받는 문제가 있었습니다. 또한 변경 빈도가 다른 이미지에 하나의 캐싱 방식을 적용하면 불필요한 다운로드가 발생하거나 변경된 이미지가 바로 반영되지 않을 수 있었습니다.',
+    ],
+    problems: [],
+    roleHeading: '역할',
+    roles: ['React Native 앱의 이미지 처리와 캐싱 구조 설계·구현'],
+    approach: [],
+    keyWork: [
+      '사용자 업로드 이미지를 화면에서 필요한 크기로 리사이징하고 WebP로 변환하는 처리 흐름을 구성했습니다.',
+      '변경 가능성이 낮은 정적 이미지는 immutable 캐시를 적용해 저장된 이미지를 재사용하도록 했습니다.',
+      '사용자 프로필처럼 변경될 수 있는 동적 이미지는 조건부 캐시를 적용해 필요한 시점에 갱신할 수 있도록 구분했습니다.',
+    ],
+    results: [
+      '이미지 크기와 포맷을 업로드 전에 최적화하고, 이미지의 변경 특성에 따라 캐시 재사용과 갱신 기준을 분리했습니다.',
+    ],
+    tech: ['React Native', 'TypeScript', 'FastImage', 'react-native-image-resizer', 'WebP'],
+  },
+  {
+    company: '이로운소프트 | 개발팀 주임',
     companyId: 'erounsoft',
     title: '예천양수발전소 실시간 모니터링',
-    duration: '2023.10 — 2024.03',
+    duration: '2022.08 ~ 2024.04',
     background: [
       '차트마다 연결과 재연결 상태를 관리해 화면이 커질수록 관리 지점도 함께 늘어났습니다.',
     ],
@@ -270,14 +268,14 @@ export const careerProjects = [
       '수신 데이터를 식별자에 따라 필요한 차트로 분배했습니다.',
       '연결·재연결 관리 지점을 단일화했습니다.',
     ],
-    results: ['차트별 연결 구조를 단일 연결·식별자 기반 분배 구조로 변경했습니다.'],
+    resultsHeading: '변화',
+    results: ['차트별 연결 구조 → 단일 연결·식별자 기반 분배 구조'],
     tech: ['React', 'TypeScript', 'Redux Toolkit', 'WebSocket', 'Highcharts'],
   },
   {
-    company: '이로운소프트',
+    company: '이로운소프트 | 개발팀 주임',
     companyId: 'erounsoft',
     title: 'SafeWing 산업안전 백엔드 개발',
-    duration: '2023.08 — 2023.09',
     background: [
       '심박수·체온을 측정하는 공용 웨어러블 기기의 지급·반납을 수기로 관리해, 근무일마다 달라지는 사용자와 상태 이력을 추적하기 어려웠습니다. 공공데이터 API 응답 지연이 어드민 조회에 직접 영향을 주는 구조도 분리해야 했습니다.',
     ],
@@ -296,10 +294,9 @@ export const careerProjects = [
     tech: ['Node.js', 'Express', 'TypeScript', 'PostgreSQL', 'REST API', 'Open API', 'React'],
   },
   {
-    company: '이로운소프트',
+    company: '이로운소프트 | 개발팀 주임',
     companyId: 'erounsoft',
     title: 'Z-CAR 차량 진단 SDK 연동',
-    duration: '2022.08 — 2023.07',
     background: [
       '차량 진단 SDK에서 제공하는 BLE 연결, VIN 조회와 OBD-II 데이터를 React Native 앱에서 사용해야 했습니다.',
     ],
@@ -320,6 +317,7 @@ export const careerProjects = [
 export const giggy = {
   title: 'GIGGY',
   subtitle: '호주 워킹홀리데이 구인·구직 매칭 앱',
+  github: 'https://github.com/slobbie/giggy-backend',
   intro: [
     '구인 공고와 사용자 프로필을 기반으로 매칭하고, 수락 이후 채팅과 근무 일정으로 이어지는 모바일 서비스입니다.',
   ],
@@ -375,17 +373,8 @@ export const giggy = {
     details: [
       'Entity 조회·등록·수정·삭제, 관계 조회와 트랜잭션 기능을 MikroORM 기반의 공통 DbRunner로 구성해 도메인별 Repository에서 재사용했습니다.',
     ],
-    flow: `            Repository
-                 │
-                 ▼
-             DbRunner
-                 │
-   ┌─────────────┼─────────────┐
-  조회           변경         트랜잭션
-Entity · 관계  등록 · 수정 · 삭제  동일한 DB 컨텍스트
-   └─────────────┼─────────────┘
-                 ▼
-                 DB`,
+    flow: `Repository → DbRunner → DB
+              조회 · 변경 · 트랜잭션`,
   },
   realtime: {
     background:
@@ -406,7 +395,7 @@ Entity · 관계  등록 · 수정 · 삭제  동일한 DB 컨텍스트
                  │
    ┌─────────────┼─────────────┐
   채팅           알림         근무 일정
-          FCM 푸시 · 인앱 알림`,
+              FCM · 인앱`,
   },
   testing: {
     summary: [

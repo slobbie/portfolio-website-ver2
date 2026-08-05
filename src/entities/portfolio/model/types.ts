@@ -1,3 +1,9 @@
+export type AdditionalInformationItem = {
+  title: string;
+  detail: string;
+  duration: string;
+};
+
 export type ProfessionalSummaryItem = {
   label: string;
   title: string;
@@ -28,6 +34,7 @@ export type CareerProject = {
   roles: readonly string[];
   approach: readonly string[];
   keyWork: readonly string[];
+  resultsHeading?: string;
   results: readonly string[];
   tech: readonly string[];
 };
@@ -60,6 +67,7 @@ type GiggyDeploymentChapter = {
 export type GiggyContent = {
   title: string;
   subtitle: string;
+  github: string;
   intro: readonly string[];
   scope: readonly string[];
   stack: readonly string[];

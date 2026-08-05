@@ -3,7 +3,7 @@ import { Block } from '@/shared/ui/ContentBlock.styles';
 import { CountingText } from '@/shared/ui/CountingText';
 
 type ContentBlockProps = {
-  title: string;
+  title?: string;
   paragraphs?: readonly string[];
   items?: readonly string[];
   tone?: 'default' | 'accent';
@@ -31,9 +31,10 @@ export function ContentBlock({
       className={`detail-block detail-block--${tone}`}
       tone={tone}
       variant={variant}
+      $hasTitle={Boolean(title)}
       {...lineReveal}
     >
-      <h4>{title}</h4>
+      {title && <h4>{title}</h4>}
       {paragraphs.map((paragraph) => (
         <p key={paragraph}>{paragraph}</p>
       ))}
