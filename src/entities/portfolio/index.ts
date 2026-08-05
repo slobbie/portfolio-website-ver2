@@ -1,4 +1,5 @@
 export {
+  additionalInformation,
   careerProjects,
   experienceOverview,
   giggy,
@@ -7,6 +8,7 @@ export {
   techGroups,
 } from '@/entities/portfolio/model/content';
 export type {
+  AdditionalInformationItem,
   CareerProject,
   ExperienceOverviewItem,
   GiggyContent,

@@ -49,6 +49,7 @@ function CareerArticle({
 }: CareerArticleProps) {
   const reveal = useReveal('sm');
   const { ref: focusRef, focused } = useViewportFocus();
+  const [titleName, titleDescription] = project.title.split(' | ');
   /* 등장 판정과 활성 판정이 같은 글 전체를 재야 해서 ref를 합칩니다. */
   const ref = useMergedRefs<HTMLElement>(reveal.ref, focusRef);
 
@@ -68,17 +69,31 @@ function CareerArticle({
         <p>
           {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
         </p>
-        <h3>{project.title}</h3>
+        <h3 data-compound={Boolean(titleDescription)}>
+          {titleDescription ? (
+            <>
+              <span className="career-project-name">{titleName}</span>
+              <span className="career-project-separator"> | </span>
+              <span className="career-project-description">{titleDescription}</span>
+            </>
+          ) : (
+            project.title
+          )}
+        </h3>
         {project.duration && <time>{project.duration}</time>}
       </CareerProjectTitle>
 
       <CareerProjectBody className="career-project-body">
-        <ContentBlock title="프로젝트 배경" paragraphs={project.background} />
+        <ContentBlock title="배경" paragraphs={project.background} />
         <ContentBlock title="당시 문제 상황" items={project.problems} />
         <ContentBlock title={project.roleHeading ?? '담당 역할'} items={project.roles} />
         <ContentBlock title="해결 접근 방식" paragraphs={project.approach} />
-        <ContentBlock title="주요 수행 내용" items={project.keyWork} />
-        <ContentBlock title="결과" paragraphs={project.results} tone="accent" />
+        <ContentBlock title="주요 기여" items={project.keyWork} />
+        <ContentBlock
+          title={project.resultsHeading ?? '결과'}
+          paragraphs={project.results}
+          tone="accent"
+        />
         <ContentBlock title="기술" paragraphs={[project.tech.join(' · ')]} />
       </CareerProjectBody>
     </CareerArticleRoot>

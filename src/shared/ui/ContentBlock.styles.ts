@@ -5,10 +5,12 @@ import { media } from '@/shared/config/theme';
 export const Block = styled(motion.section)<{
   tone: 'default' | 'accent';
   variant: 'default' | 'card';
+  $hasTitle: boolean;
 }>`
   position: relative;
   display: grid;
-  grid-template-columns: 150px minmax(0, 1fr);
+  grid-template-columns: ${({ $hasTitle }) =>
+    $hasTitle ? '150px minmax(0, 1fr)' : 'minmax(0, 1fr)'};
   gap: var(--space-9);
   padding: var(--space-8) 0;
   /* 색은 의사요소가 그리고, border는 기존 박스 높이만 유지합니다. */
@@ -81,7 +83,7 @@ export const Block = styled(motion.section)<{
 
   p,
   ul {
-    grid-column: 2;
+    grid-column: ${({ $hasTitle }) => ($hasTitle ? '2' : '1')};
     color: var(--text-soft);
     font-size: var(--text-base);
     line-height: 1.82;
