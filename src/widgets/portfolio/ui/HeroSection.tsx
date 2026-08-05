@@ -53,7 +53,7 @@ export function HeroSection() {
       <HeroCopy className="hero-copy" {...group}>
         <HeroTitle className="hero-title" {...nested}>
           <HeroRole className="hero-role" {...item}>
-            Developer
+            Frontend Developer
           </HeroRole>
           <HeroName className="hero-name">
             <SplitText text="정해석" delayChildren={0.19} />
@@ -67,6 +67,9 @@ export function HeroSection() {
           <HeroContact href="tel:+821066121297">010-6612-1297</HeroContact>
           <HeroContact href="https://github.com/slobbie" external>
             GitHub
+          </HeroContact>
+          <HeroContact href="https://slobbie.github.io/portfolio-web/" external>
+            Portfolio
           </HeroContact>
         </HeroLinks>
       </HeroCopy>

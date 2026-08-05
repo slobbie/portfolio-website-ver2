@@ -31,10 +31,7 @@ export function SummarySection() {
 
   return (
     <PageSection className="page-section" id="summary">
-      <SectionHeading
-        title="Professional Summary"
-        description="화면 구현에서 출발해 실시간 통신, 네이티브 연동, 백엔드 설계까지 확장해 왔습니다."
-      />
+      <SectionHeading title="Professional Summary" />
       <SummaryGrid className="summary-grid" {...group}>
         {professionalSummary.map((entry) => (
           <SummaryItem entry={entry} reveal={item} key={entry.title} />
